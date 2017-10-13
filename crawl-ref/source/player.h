@@ -21,6 +21,7 @@
 #include "duration-type.h"
 #include "eq-type.h"
 #include "equipment-type.h"
+#include "fixedp.h"
 #include "flush-reason-type.h"
 #include "game-chapter.h"
 #include "kills.h"
@@ -553,7 +554,7 @@ public:
     item_def *slot_item(equipment_type eq, bool include_melded=false) const
         override;
 
-    int base_ac_from(const item_def &armour, int scale = 1) const;
+    fixedp<> base_ac_from(const item_def &armour) const;
     void maybe_degrade_bone_armour(int trials);
 
     int inaccuracy() const override;
@@ -801,8 +802,8 @@ public:
     bool can_smell() const;
     bool can_sleep(bool holi_only = false) const override;
 
-    int racial_ac(bool temp) const;
-    int base_ac(int scale) const;
+    fixedp<> racial_ac(bool temp) const;
+    fixedp<> base_ac() const;
     int armour_class(bool /*calc_unid*/ = true) const override;
     int gdr_perc() const override;
     int evasion(ev_ignore_type evit = EV_IGNORE_NONE,
@@ -949,7 +950,7 @@ int player_hunger_rate(bool temp = true);
 int calc_hunger(int food_cost);
 
 int player_icemail_armour_class();
-int sanguine_armour_bonus();
+fixedp<> sanguine_armour_bonus();
 
 int player_wizardry(spell_type spell);
 
